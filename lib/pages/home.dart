@@ -14,8 +14,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _usernamecontroller = TextEditingController();
-  final TextEditingController _passwordcontroller = TextEditingController();
+  final TextEditingController _namecontroller = TextEditingController();
+  final TextEditingController _studentIDcontroller = TextEditingController();
 
   String? yearValue;
   String? majorValue;
@@ -104,11 +104,32 @@ class _MyHomePageState extends State<MyHomePage> {
       padding: const EdgeInsets.only(top: 20),
       child: ElevatedButton(
         onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            print(_usernamecontroller.text);
-            print(_passwordcontroller.text);
-          }
-          return null;
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              title: const Text('ยืนยันการบันทึกข้อมูล'),
+              content: const Text('ตรวจสอบข้อมูลของคุณให้ครบถ้วนก่อนกดยืนยัน'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('ยกเลิก'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('ยืนยัน'),
+                ),
+              ],
+            ),
+          );
+          // if (_formKey.currentState!.validate()) {
+          //   print(_namecontroller.text);
+          //   print(_studentIDcontroller.text);
+          // }
+          // return;
         },
         child: const Text(
           'บันทึกข้อมูล',
@@ -152,13 +173,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   TextFormField studentID() {
     return TextFormField(
-      controller: _usernamecontroller,
+      controller: _studentIDcontroller,
       validator: (value) {
         if (value!.isEmpty) {
           return 'กรุณากรอกรหัสนิสิต';
         }
         return null;
       },
+      keyboardType: TextInputType.phone,
       decoration: const InputDecoration(
         labelText: 'รหัสนิสิต',
         prefixIcon: Icon(Icons.account_box),
@@ -196,7 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   TextFormField name() {
     return TextFormField(
-      controller: _usernamecontroller,
+      controller: _namecontroller,
       validator: (value) {
         if (value!.isEmpty) {
           return 'กรุณากรอกชื่อ-นามสกุล';
@@ -287,7 +309,8 @@ class _MyHomePageState extends State<MyHomePage> {
       'ข้อมูลส่วนตัวของนิสิต',
       style: TextStyle(
         fontSize: 20,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w600,
+        color: Colors.deepPurple,
       ),
     );
   }
