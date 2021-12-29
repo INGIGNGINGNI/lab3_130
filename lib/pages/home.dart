@@ -125,11 +125,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           );
-          // if (_formKey.currentState!.validate()) {
-          //   print(_namecontroller.text);
-          //   print(_studentIDcontroller.text);
-          // }
-          // return;
+          if (_formKey.currentState!.validate()) {
+            print(_namecontroller.text);
+            print(_studentIDcontroller.text);
+          }
+          return;
         },
         child: const Text(
           'บันทึกข้อมูล',
@@ -327,7 +327,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onChanged: (value) {
             setState(() {
               yearValue = value;
-              // print(value);
+              print(value);
             });
           },
         ),
@@ -349,7 +349,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onChanged: (value) {
             setState(() {
               majorValue = value;
-              // print(value);
+              print(value);
             });
           },
         ),
@@ -376,7 +376,7 @@ class _MyHomePageState extends State<MyHomePage> {
             } else {
               selectLecturer.remove(lecturer.thName!);
             }
-            // print(selectLecturer);
+            print(selectLecturer);
           },
         ),
       );
