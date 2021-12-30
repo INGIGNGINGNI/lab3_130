@@ -22,7 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   late List<Year> years;
   late List<Major> majors;
-  late List<Faculty> dropdownItems = Faculty.getlistItem();
+  late List<Faculty> dropdownItems = Faculty.getfaculty();
   late List<DropdownMenuItem<Faculty>> dropdownMenuItems;
   late List<Lecturer> lecturers;
   late Faculty _selectedFaculty;
@@ -119,7 +119,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: const Text('ยกเลิก'),
                 ),
                 TextButton(
-                  onPressed: () => Navigator.pop(context, 'OK'),
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SecondPage(),
+                    ),
+                  ),
                   child: const Text('ยืนยัน'),
                 ),
               ],
@@ -180,10 +185,11 @@ class _MyHomePageState extends State<MyHomePage> {
         }
         return null;
       },
-      keyboardType: TextInputType.phone,
+      keyboardType: TextInputType.number,
+      maxLength: 9,
       decoration: const InputDecoration(
         labelText: 'รหัสนิสิต',
-        prefixIcon: Icon(Icons.account_box),
+        prefixIcon: Icon(Icons.article),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           borderSide: BorderSide(
@@ -390,7 +396,7 @@ class Faculty {
   String? fname;
 
   Faculty(this.value, this.fname);
-  static List<Faculty> getlistItem() {
+  static List<Faculty> getfaculty() {
     return [
       Faculty(1, 'วิทยาศาสตร์'),
       Faculty(2, 'วิทยาการสุขภาพและการกีฬา'),
@@ -401,5 +407,59 @@ class Faculty {
       Faculty(7, 'พยาบาลศาสตร์'),
       Faculty(3, 'ศึกษาศาสตร์'),
     ];
+  }
+}
+
+class SecondPage extends StatefulWidget {
+  const SecondPage({Key? key}) : super(key: key);
+
+  @override
+  _SecondPageState createState() => _SecondPageState();
+}
+
+class _SecondPageState extends State<SecondPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('MY INFO'),
+      ),
+      body: ListView(
+        children: [
+          Column(
+            children: [
+              Container(
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: SizedBox(
+                    child: Card(
+                      child: Text(
+                        'บันทึกข้อมูลของคุณเรียบร้อยแล้ว',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    width: 350,
+                    height: 100,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 120),
+            child: ElevatedButton(
+              onPressed: () => Navigator.pop(
+                context,
+                MaterialPageRoute(builder: (context) => const MyHomePage()),
+              ),
+              child: const Text('กลับไปยังหน้าแรก'),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
